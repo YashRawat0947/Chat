@@ -56,12 +56,16 @@ function App() {
 
   useEffect(() => {
     checkAuth();
-    if (!socket.connected) {
-      socket.connect();  // Ensure socket is connected
+    
+    // Ensure socket is defined and not null before checking its connection
+    if (socket && !socket.connected) {
+      socket.connect(); // Ensure socket is connected
     }
     
     return () => {
-      socket.disconnect(); // Clean up socket connection
+      if (socket) {
+        socket.disconnect(); // Clean up socket connection
+      }
     };
   }, [checkAuth, socket]);
 
