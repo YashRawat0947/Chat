@@ -1,0 +1,170 @@
+/* ChatRooms.css */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+  }
+  .container {
+    background: linear-gradient(135deg, #1a472a, #2d8659);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .circle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: float 15s infinite ease-in-out;
+  }
+  .circle:nth-child(1) {
+    width: 100px;
+    height: 100px;
+    left: 10%;
+    top: 20%;
+  }
+  .circle:nth-child(2) {
+    width: 150px;
+    height: 150px;
+    right: 15%;
+    top: 40%;
+    animation-delay: 2s;
+  }
+  .circle:nth-child(3) {
+    width: 80px;
+    height: 80px;
+    left: 20%;
+    bottom: 30%;
+    animation-delay: 4s;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+  }
+  .card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 90%;
+    max-width: 400px;
+    z-index: 2;
+    animation: fadeIn 1s ease-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  h1 {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  .friends {
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    color: white;
+    margin-bottom: 1.5rem;
+  }
+  .friends svg {
+    margin-right: 0.5rem;
+  }
+  .input-container {
+    display: flex;
+    margin-bottom: 1.5rem;
+  }
+  input {
+    flex-grow: 1;
+    padding: 0.7rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+  input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  button {
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+  button svg {
+    margin-right: 0.3rem;
+  }
+  .back {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+  }
+  .back:hover {
+    opacity: 1;
+  }
+  .back svg {
+    margin-right: 0.5rem;
+  }
+  .room-list {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+  }
+  .room-list li {
+    margin-bottom: 0.5rem;
+  }
+  .room-list a {
+    color: #1e90ff;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .room-list a:hover {
+    color: #87ceeb;
+  }
+  @media (max-width: 480px) {
+    .card {
+      padding: 1.5rem;
+    }
+    h1 {
+      font-size: 1.7rem;
+    }
+    .friends, .back {
+      font-size: 0.9rem;
+    }
+    input, button {
+      font-size: 0.9rem;
+    }
+  }
+  
