@@ -52,22 +52,11 @@ const AnimatedBackground = () => (
 );
 
 function App() {
-  const { isCheckingAuth, checkAuth, socket } = useAuthStore();
+  const { isCheckingAuth, checkAuth } = useAuthStore();
 
   useEffect(() => {
     checkAuth();
-    
-    // Ensure socket is defined and not null before checking its connection
-    if (socket && !socket.connected) {
-      socket.connect(); // Ensure socket is connected
-    }
-    
-    return () => {
-      if (socket) {
-        socket.disconnect(); // Clean up socket connection
-      }
-    };
-  }, [checkAuth, socket]);
+  }, [checkAuth]);
 
   if (isCheckingAuth) {
     return (
@@ -83,14 +72,38 @@ function App() {
       <AnimatedBackground />
       <div className="content-container">
         <Routes>
-          <Route path="/" element={<RouteWrapper isProtected={true} element={HomePage} />} />
-          <Route path="/signup" element={<RouteWrapper isProtected={false} element={SignUpPage} />} />
-          <Route path="/login" element={<RouteWrapper isProtected={false} element={LoginPage} />} />
-          <Route path="/verify-email" element={<RouteWrapper isProtected={false} element={EmailVerificationPage} />} />
-          <Route path="/forgot-password" element={<RouteWrapper isProtected={false} element={ForgotPasswordPage} />} />
-          <Route path="/reset-password/:token" element={<RouteWrapper isProtected={false} element={ResetPasswordPage} />} />
-          <Route path="/rooms" element={<RouteWrapper isProtected={true} element={RoomListPage} />} />
-          <Route path="/room/:roomId" element={<RouteWrapper isProtected={true} element={ChatRoomPage} />} />
+          <Route
+            path="/"
+            element={<RouteWrapper isProtected={true} element={HomePage} />}
+          />
+          <Route
+            path="/signup"
+            element={<RouteWrapper isProtected={false} element={SignUpPage} />}
+          />
+          <Route
+            path="/login"
+            element={<RouteWrapper isProtected={false} element={LoginPage} />}
+          />
+          <Route
+            path="/verify-email"
+            element={<RouteWrapper isProtected={false} element={EmailVerificationPage} />}
+          />
+          <Route
+            path="/forgot-password"
+            element={<RouteWrapper isProtected={false} element={ForgotPasswordPage} />}
+          />
+          <Route
+            path="/reset-password/:token"
+            element={<RouteWrapper isProtected={false} element={ResetPasswordPage} />}
+          />
+          <Route
+            path="/rooms"
+            element={<RouteWrapper isProtected={true} element={RoomListPage} />}
+          />
+          <Route
+            path="/room/:roomId"
+            element={<RouteWrapper isProtected={true} element={ChatRoomPage} />}
+          />
         </Routes>
       </div>
       <Toaster />
