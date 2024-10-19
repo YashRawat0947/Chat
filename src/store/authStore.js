@@ -6,7 +6,7 @@ import { io } from "socket.io-client";
 const API_URL = "https://chat-main-k557.onrender.com/api/auth";
 const socket = io("https://chat-main-k557.onrender.com", {
   autoConnect: false,
-  withCredentials: true
+  withCredentials: true,
 });
 
 axios.defaults.withCredentials = true;
@@ -23,7 +23,7 @@ export const useAuthStore = create((set) => ({
   connectSocket: () => {
     socket.connect();
     set({ socket });
-    
+
     socket.on("auth_success", (user) => {
       set({ user, isAuthenticated: true });
     });
@@ -51,6 +51,9 @@ export const useAuthStore = create((set) => ({
         isLoading: false,
       });
 
+      // Store token in localStorage
+      localStorage.setItem('token', response.data.token);
+      
       socket.emit("user_signup", { email, name });
     } catch (error) {
       set({
@@ -72,6 +75,9 @@ export const useAuthStore = create((set) => ({
         isLoading: false,
       });
 
+      // Store token in localStorage
+      localStorage.setItem('token', response.data.token);
+      
       socket.emit("user_login", { email });
     } catch (error) {
       set({
@@ -93,6 +99,9 @@ export const useAuthStore = create((set) => ({
         isLoading: false,
       });
 
+      // Clear token from localStorage
+      localStorage.removeItem('token');
+      
       socket.emit("user_logout");
       socket.disconnect();
     } catch (error) {
@@ -119,11 +128,21 @@ export const useAuthStore = create((set) => ({
       throw error;
     }
   },
-  
+
   checkAuth: async () => {
     set({ isCheckingAuth: true, error: null });
+    const token = localStorage.getItem('token'); // Retrieve token from localStorage
+    if (!token) {
+      set({ user: null, isAuthenticated: false, isCheckingAuth: false });
+      return;
+    }
+    
     try {
-      const response = await axios.get(`${API_URL}/check-auth`);
+      const response = await axios.get(`${API_URL}/check-auth`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Send the token in the Authorization header
+        },
+      });
       set({
         user: response.data.user,
         isAuthenticated: true,
@@ -133,18 +152,20 @@ export const useAuthStore = create((set) => ({
         socket.connect();
       }
     } catch (error) {
-      set({ 
-        user: null, 
-        isAuthenticated: false, 
-        error: null, 
-        isCheckingAuth: false 
+      set({
+        user: null,
+        isAuthenticated: false,
+        error: null,
+        isCheckingAuth: false,
       });
       if (socket.connected) {
         socket.disconnect();
       }
+      // Clear token if there was an error
+      localStorage.removeItem('token');
     }
   },
-  
+
   forgotPassword: async (email) => {
     set({ isLoading: true, error: null });
     try {
@@ -153,11 +174,11 @@ export const useAuthStore = create((set) => ({
     } catch (error) {
       set({
         isLoading: false,
-        error: error.response?.data?.message || "Error sending reset password email"
+        error: error.response?.data?.message || "Error sending reset password email",
       });
     }
   },
-  
+
   resetPassword: async (token, password) => {
     set({ isLoading: true, error: null });
     try {
@@ -166,9 +187,9 @@ export const useAuthStore = create((set) => ({
     } catch (error) {
       set({
         isLoading: false,
-        error: error.response?.data?.message || "Error resetting password"
+        error: error.response?.data?.message || "Error resetting password",
       });
       throw error;
     }
-  }
+  },
 }));
