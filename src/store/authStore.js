@@ -2,7 +2,6 @@ import { create } from "zustand";
 import axios from "axios";
 import { io } from "socket.io-client";
 
-// Initialize API URL and Socket.IO connection
 const API_URL = "https://chat-main-k557.onrender.com/api/auth";
 const socket = io("https://chat-main-k557.onrender.com", {
   autoConnect: false,

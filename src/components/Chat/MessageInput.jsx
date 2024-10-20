@@ -10,7 +10,7 @@ function MessageInput({ onSendMessage, onTyping, onStopTyping }) {
     if (message.trim()) {
       onSendMessage(message);
       setMessage('');
-      handleStopTyping(); // Stop typing when the message is sent
+      handleStopTyping(); 
     }
   };
 
@@ -35,13 +35,12 @@ function MessageInput({ onSendMessage, onTyping, onStopTyping }) {
   const handleStopTyping = () => {
     if (isTyping) {
       setIsTyping(false);
-      onStopTyping(); // Notify that user stopped typing
+      onStopTyping(); 
     }
   };
 
   useEffect(() => {
     return () => {
-      // Cleanup timeout when the component unmounts
       if (typingTimeoutRef.curraent) {
         clearTimeout(typingTimeoutRef.current);
       }

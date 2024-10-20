@@ -3,7 +3,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
 
-// Import your pages here...
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import EmailVerificationPage from "./pages/EmailVerificationPage";
@@ -13,7 +12,6 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import RoomListPage from "./pages/RoomListPage";
 import ChatRoomPage from "./pages/ChatRoomPage";
 
-// Centralized Route Wrapper for Protected and Public routes
 const RouteWrapper = ({ isProtected, element: Element }) => {
   const { isAuthenticated, user, isCheckingAuth } = useAuthStore();
 
@@ -42,7 +40,6 @@ const LoadingSpinner = () => (
   </div>
 );
 
-// Animated background component for visual effects (unchanged)
 const AnimatedBackground = () => (
   <div className="animated-background">
     {[...Array(10)].map((_, index) => (

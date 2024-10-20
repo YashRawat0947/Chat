@@ -1,7 +1,6 @@
-// src/api/chatApi.js
 import axios from 'axios';
 
-const API_URL = 'https://chat-main-k557.onrender.com/api/chat'; // Your backend API URL
+const API_URL = 'https://chat-main-k557.onrender.com/api/chat'; 
 
 
 export const fetchRooms = async () => {

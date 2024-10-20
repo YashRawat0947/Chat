@@ -10,7 +10,6 @@ function MessageList({ messages, isTyping, typingUser }) {
         </div>
       ))}
 
-      {/* Display typing indicator if a user is typing */}
       {isTyping && typingUser && (
         <div className="typing-indicator">
           <em>{typingUser} is typing...</em>
